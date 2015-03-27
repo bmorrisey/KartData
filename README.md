@@ -16,6 +16,8 @@ Call the function with a minimum of 3 arguments:
 You must discover your heat IDs on your own, it is a generally annoying process. These are heat IDs that bracket the timespan you are interested in, and can be found by guess-and-testing the following URL structure. It seems that not all heat IDs are valid, and in some cases not monotonic and/or continuous.
 http://mb21000oaks.clubspeedtiming.com/sp_center/HeatDetails.aspx?HeatNo=150002
 
+A function is available to append more recent data to an existing datafile: [append_kart_data.m](https://github.com/bmorrisey/KartData/blob/master/append_kart_data.m)
+
 ## Data Visualization
 File (MATLAB script): [kart_plotting_all.m](https://github.com/bmorrisey/KartData/blob/master/kart_plotting_all.m)
 

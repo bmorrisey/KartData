@@ -70,6 +70,15 @@ if kart_data(1,1)==0
     kart_data = kart_data(2:end,:);
 end
 start_datenum=min(kart_data(kart_data(:,2)==starting_heat,4));
+while isempty(start_datenum)
+    %This is a check to catch invalid heat ID
+    starting_heat=starting_heat+1;
+    if starting_heat>ending_heat
+        break;
+    end
+    start_datenum=min(kart_data(kart_data(:,2)==starting_heat,4));
+end
+
 end_datenum=min(kart_data(kart_data(:,2)==ending_heat,4));
 if size(end_datenum,1)<1
     end_datenum=datenum(date);

@@ -15,7 +15,7 @@ end_date=datestr(max(kart_data(:,4)));
 % AV_Racers = { racerID, racerName, plot_flag }
 AV_Racers={...
     1003786,    'Tyler Durden', 0;
-    1024723,    'Jeff Rodrian', 0;
+    1024723,    'JeffRod',      0;
     1073028,    'TBall',        0;
     1113917,    'XPLRITT',      0;
     1150608,    'Kamil',        0;
@@ -24,13 +24,17 @@ AV_Racers={...
     1186403,    'Clint W',      1;
     73742,      'Master P',     0;
     25956,      'K Dub 217',    0;
-    1073030,    'BMO',          0;
-    1075125,    'Darkwing48',   0;
+    1073030,    'BMO',          1;
+    1075125,    'Darkwing48',   1;
     6376,       'Dr. Drift',    1;
     26605,      'Podolski',     0;
     1152050,    'Loay',         0;
     1061761,    'Ruggi',        1;
     1153138,    'Rogdor',       1;
+    1186656,    'rocketman',    1;
+    1186655,    'April Fuelz',  1;
+    1186654,    'Jomama',       1;
+    1186404,    'Toaster',      1;
     1448,       'Snow Racer',   0};
 
 rank_basis=[.02:.01:.05];

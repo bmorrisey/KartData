@@ -25,9 +25,12 @@ Other parameters may be specified in the first block of the plotting script, inc
 
 ### Racer Performance
 Compares known racers to all other racers on a per-kart basis.
+![Racer Performance](/images/RacerPerformance.png)
 
 ### Kart Ranking
 Ranks the karts by the average of the best [selectable] percentage of lap times.
+![Kart Ranking](/images/KartTiers.png)
 
 ### Kart Rank Sensitivity Analysis
 Evaluates how the kart rank results change if we use different sample sizes of best times.
+![Rank Sensitivity](/images/KartRankingSensitivity.png)

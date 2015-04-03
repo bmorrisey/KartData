@@ -39,8 +39,34 @@ AV_Racers={...
 
 rank_basis=[.02:.01:.05];
 
+racer_score_cutoff = 3500; 
+%Any racers with scores higher than this value are assumed to be employees
+%They are labeled as "pros" and may be removed from the comparison
+
+RacerGroupFlag = 2;
+% 1 - compare all racers
+% 2 - compare only amateurs
+% 3 - compare only pros
+
 %% Other Code
-Full_Kart_DB = kart_data;
+all_racer_data      = kart_data;
+amateur_racer_data  = kart_data(kart_data(:,6)<racer_score_cutoff,:);
+pro_racer_data      = kart_data(kart_data(:,6)>=racer_score_cutoff,:);
+
+num_pros=length(unique(pro_racer_data(:,5)))
+
+switch RacerGroupFlag
+    case 1
+        Full_Kart_DB = all_racer_data;
+    case 2
+        Full_Kart_DB = amateur_racer_data;
+    case 3
+        Full_Kart_DB = pro_racer_data;
+    otherwise
+        warning('Don''t recognize that flag value, using all racers')
+        Full_Kart_DB = all_racer_data;
+end
+
 %format: [kart heatID best_time datenum racer_ID]
 cmap=colormap;
 fillmap=colormap('flag');
@@ -61,6 +87,8 @@ end_date=datestr(end_date,1);
 %plot_racerID=[1073030 6376 1073028 26601 1003786 1098385 1071716 1084572 1075127 1113917 26605 25956 1117507];
 %plot_racerID=[1073030 6376 1073028 1003786 1075127 1113917 1117507];
 
+%Clean Up AV Racer List
+AV_Racers = AV_Racers([AV_Racers{:,3}]==1,:);
 plot_racerID=[AV_Racers{find([AV_Racers{:,3}]),1}];
 
 Competitors_2013=[906;1448;6376;6544;32201;43121;79990;1003786;1038388;1054900;1071760;1073837;1075127;1098887;1099305;1113723;1113917;1114809;1116183;1116291;1116951;1116952;1117089;1117570;1117636;1118273;1118274;1118728;1118729;1118779;1118793;1118794;1118795;1118796;1118798;1118801;1118803;1118804;1118808;1118809;1118810;1118811;1118812;1118813;1118825;1118831;1119028;1119029;1119030;1119031;1119032;1119033;1119034;1119035;1119036];
@@ -301,6 +329,15 @@ ylabel('Best Lap Time','FontSize',14,'FontWeight','b')
 title({'Best Lap Times During Period';strcat([start_date,' to ',end_date])},'FontSize',16,'FontWeight','b')
 %legend('All Racers','2013 Competitors','Location','EastOutside')
 
-legend([h_all(1),h_Competitors(1),h_AV(1)],'All Racers','2013 Competitors','AV Racers','fontweight','b','fontsize',12,'Location','EastOutside')
+legendhandles=[h_all(1)];
+if exist('h_Competitors')
+    legendhandles=[legendhandles,h_Competitors(1)];
+end
+
+if exist('h_AV')
+    legendhandles=[legendhandles,h_AV(1)];
+end
+
+legend(legendhandles,'All Racers','2013 Competitors','AV Racers','fontweight','b','fontsize',12,'Location','EastOutside')
 
 

@@ -2,7 +2,7 @@ clear all
 close all
 clc
 %% Input and Config
-print_plots=0; % Whether or not to make pngs
+print_plots=1; % Whether or not to make pngs
 
 % Load the mat file created by kart_data_master.m
 load 2015_Race_Data_Initial
@@ -225,8 +225,10 @@ for pct=rank_basis(end)
         times=sort(times);
         rank_time(i)=mean(times(1:max(1,round(length(times)*top_pct))));
         std_time(i)=std(times(1:max(1,round(length(times)*top_pct))));
+        max_time(i)=max(times(1:max(1,round(length(times)*top_pct))));
+        min_time(i)=min(times(1:max(1,round(length(times)*top_pct))));
     end
-    ranks=sortrows([[1:24]',rank_time',std_time'],2);
+    ranks=sortrows([[1:24]',rank_time',std_time',max_time',min_time'],2);
     figure(7)
     %subplot(1,4,plot_index)
     plot(ranks(:,2),'-bo','LineWidth',2,...
@@ -235,6 +237,10 @@ for pct=rank_basis(end)
                 'MarkerSize',5)
     hold on
     errorbar(ranks(:,2),ranks(:,3),'.r')
+    hold on
+    plot(ranks(:,4),'k*')
+    hold on
+    plot(ranks(:,5),'k*')
     for i=1:24
         text(i,ranks(i,2),num2str(ranks(i,1)),'color','m','fontweight','b','fontsize',12,'horizontalAlignment','right','verticalAlignment','baseline')
     end

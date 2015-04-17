@@ -2,7 +2,7 @@ clear all
 close all
 clc
 %% Input and Config
-print_plots=1; % Whether or not to make pngs
+print_plots=0; % Whether or not to make pngs
 
 % Load the mat file created by kart_data_master.m
 load 2015_Race_Data_Initial
@@ -21,6 +21,7 @@ AV_Racers={...
     1150608,    'Kamil',        0;
     6390,       'Aeronaut',     0;
     1098385,    'LINZ',         1;
+    1430,       'Linz',         1;
     1186403,    'Clint W',      1;
     73742,      'Master P',     0;
     25956,      'K Dub 217',    0;
@@ -39,7 +40,7 @@ AV_Racers={...
 
 rank_basis=[.02:.01:.05];
 
-racer_score_cutoff = 3500; 
+racer_score_cutoff = 3000; 
 %Any racers with scores higher than this value are assumed to be employees
 %They are labeled as "pros" and may be removed from the comparison
 
@@ -68,6 +69,7 @@ switch RacerGroupFlag
 end
 
 %format: [kart heatID best_time datenum racer_ID]
+colormap jet
 cmap=colormap;
 fillmap=colormap('flag');
 

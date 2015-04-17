@@ -9,6 +9,10 @@ function output = append_kart_data(filename,ending_heat)
 %     ending_heat - REQUIRED, integer, last heat ID of interest, code assumes
 %       heats increase in increments of 1 from starting_heat to ending_heat
 
+if ~exist(filename)
+    error(strcat(['Can''t find the specified data file: ',filename])) 
+end
+
 load(filename)
 starting_heat=max(kart_data(:,2))+1;
 

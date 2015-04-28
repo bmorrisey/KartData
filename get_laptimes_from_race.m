@@ -15,9 +15,10 @@ addpath(genpath(pwd))
 url_name = strcat('http://mb21000oaks.clubspeedtiming.com/sp_center/HeatDetails.aspx?HeatNo=',  num2str(race_ID));
 dead_rows = 7; %Number of rows in the first table that are not actual racers
 
-out_table = getTableFromWeb_mod(url_name,1);
-num_racers = size(out_table,1)-dead_rows;
 racers = get_racers_from_race(race_ID); %The order of racers in this list is the finishing order
+% out_table = getTableFromWeb_mod(url_name,1);
+
+num_racers = length(racers);
 
 lap_table=[];
 racer_list={};

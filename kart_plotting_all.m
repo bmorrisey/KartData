@@ -2,10 +2,11 @@ clear all
 close all
 clc
 %% Input and Config
-print_plots=0; % Whether or not to make pngs
+print_plots=1; % Whether or not to make pngs
 
 % Load the mat file created by kart_data_master.m
-load 2015_Race_Data_Initial
+% load 2015_Race_Data_Initial
+load 2015_TrackUpdate
 
 % start_date='02-27-2015';
 % end_date='03-30-2015';
@@ -14,29 +15,33 @@ end_date=datestr(max(kart_data(:,4)));
 
 % AV_Racers = { racerID, racerName, plot_flag }
 AV_Racers={...
-    1003786,    'Tyler Durden', 0;
-    1024723,    'JeffRod',      0;
-    1073028,    'TBall',        0;
-    1113917,    'XPLRITT',      0;
-    1150608,    'Kamil',        0;
-    6390,       'Aeronaut',     0;
+    1003786,    'Tyler Durden', 1;
+    1024723,    'JeffRod',      1;
+    1073028,    'TBall',        1;
+    1113917,    'XPLRITT',      1;
+    1150608,    'Kamil',        1;
+    6390,       'Aeronaut',     1;
     1098385,    'LINZ',         1;
     1430,       'Linz',         1;
     1186403,    'Clint W',      1;
-    73742,      'Master P',     0;
-    25956,      'K Dub 217',    0;
+    73742,      'Master P',     1;
+    25956,      'K Dub 217',    1;
     1073030,    'BMO',          1;
     1075125,    'Darkwing48',   1;
     6376,       'Dr. Drift',    1;
-    26605,      'Podolski',     0;
-    1152050,    'Loay',         0;
+    26605,      'Podolski',     1;
+    1152050,    'Loay',         1;
     1061761,    'Ruggi',        1;
     1153138,    'Rogdor',       1;
     1186656,    'rocketman',    1;
     1186655,    'April Fuelz',  1;
     1186654,    'Jomama',       1;
     1186404,    'Toaster',      1;
-    1448,       'Snow Racer',   0};
+    1127814,    'Maverick',     1;
+    1075127,    'Perci',        1;
+    1190047,    '01134MRE',     1;
+    1117507,    'Dierks Bently',1;
+    1448,       'Snow Racer',   1};
 
 rank_basis=[.02:.01:.05];
 
@@ -48,6 +53,10 @@ RacerGroupFlag = 2;
 % 1 - compare all racers
 % 2 - compare only amateurs
 % 3 - compare only pros
+
+highest_kart_number = 26;
+fastlim=20;
+slowlim=25;
 
 %% Other Code
 all_racer_data      = kart_data;
@@ -98,7 +107,7 @@ Competitors_2013=[906;1448;6376;6544;32201;43121;79990;1003786;1038388;1054900;1
 %plot_racerID=[plot_racerID,Competitors_2013'];
 
 %Count #runs for each kart in the time span
-for i=1:24
+for i=1:highest_kart_number
     kart_runs(i,1)=size(Full_Kart_DB((Full_Kart_DB(:,1)==i)&(Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)<=datenum(end_date)+1),:),1);
 end
 
@@ -118,8 +127,8 @@ if exist('plot_racerID')
         end
     end
 end
-xlim([1,24])
-ylim([17,20])
+xlim([1,highest_kart_number])
+ylim([fastlim,slowlim])
 grid on
 xlabel('KartNumber','FontSize',14,'FontWeight','b')
 ylabel('Best Lap Time','FontSize',14,'FontWeight','b')
@@ -137,7 +146,7 @@ scatter(Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)
 %         plot(Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)<=datenum(end_date)+1)&(Full_Kart_DB(:,5)==plot_racerID(racer_i)),1),Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)<=datenum(end_date)+1)&(Full_Kart_DB(:,5)==plot_racerID(racer_i)),3),'o','LineWidth',2,'MarkerEdgeColor',cmap(floor(length(cmap)*racer_i/length(plot_racerID)),:),'MarkerFaceColor',fillmap(racer_i,:),'MarkerSize',10)
 %     end
 % end
-xlim([1,24])
+xlim([1,highest_kart_number])
 ylim([16,21])
 grid on
 xlabel('KartNumber','FontSize',14,'FontWeight','b')
@@ -161,18 +170,18 @@ rankchanges=[];
 plotrankdata=[];
 plot_times=[];
 for pct=rank_basis
-    for i=1:24
+    for i=1:highest_kart_number
         top_pct=pct;
         times=Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)<=datenum(end_date)+1)&(Full_Kart_DB(:,1)==i),3);
         times=times(times>=16);
         if length(times)==0
-            times=20; %There were no times logged on this kart so set one slow race
+            times=slowlim; %There were no times logged on this kart so set one slow race
         end
         times=sort(times);
         rank_time(i)=mean(times(1:max(1,round(length(times)*top_pct))));
     end
-    ranks=sortrows([[1:24]',rank_time'],2);
-    for i=1:24
+    ranks=sortrows([[1:highest_kart_number]',rank_time'],2);
+    for i=1:highest_kart_number
         rankposition(i)=find(ranks(:,1)==i);
     end
     times_sorted_by_kart=sortrows(ranks,1);
@@ -184,7 +193,7 @@ rankchanges;
 
 figure(5)
 subplot(1,2,2)
-for i=1:24
+for i=1:highest_kart_number
     ranking_color(i,:)=[rand(), rand(), rand()];
     plot(100*rank_basis,plotrankdata(i,:),'color',ranking_color(i,:),'LineWidth',4)
     hold on
@@ -199,7 +208,7 @@ ylabel('Rank','FontSize',14,'FontWeight','b')
 %plot time on the vertical axis and basis on the horizontal
 figure(5)
 subplot(1,2,1)
-for i=1:24
+for i=1:highest_kart_number
     plot(100*rank_basis,plot_times(i,:),'color',ranking_color(i,:),'LineWidth',4)
     hold on
     text(100*max(rank_basis),plot_times(i,end),num2str(i),'fontweight','b','fontsize',20)
@@ -217,12 +226,12 @@ set(h,'PaperPositionMode','auto')
 plot_index=0;
 for pct=rank_basis(end)
     plot_index = plot_index+1;
-    for i=1:24
+    for i=1:highest_kart_number
         top_pct=pct;
         times=Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)<=datenum(end_date)+1)&(Full_Kart_DB(:,1)==i),3);
         times=times(times>=16);
         if length(times)==0
-            times=20; %There were no times logged on this kart so set one slow race
+            times=slowlim; %There were no times logged on this kart so set one slow race
         end
         times=sort(times);
         rank_time(i)=mean(times(1:max(1,round(length(times)*top_pct))));
@@ -230,7 +239,7 @@ for pct=rank_basis(end)
         max_time(i)=max(times(1:max(1,round(length(times)*top_pct))));
         min_time(i)=min(times(1:max(1,round(length(times)*top_pct))));
     end
-    ranks=sortrows([[1:24]',rank_time',std_time',max_time',min_time'],2);
+    ranks=sortrows([[1:highest_kart_number]',rank_time',std_time',max_time',min_time'],2);
     figure(7)
     %subplot(1,4,plot_index)
     plot(ranks(:,2),'-bo','LineWidth',2,...
@@ -243,13 +252,13 @@ for pct=rank_basis(end)
     plot(ranks(:,4),'k*')
     hold on
     plot(ranks(:,5),'k*')
-    for i=1:24
+    for i=1:highest_kart_number
         text(i,ranks(i,2),num2str(ranks(i,1)),'color','m','fontweight','b','fontsize',12,'horizontalAlignment','right','verticalAlignment','baseline')
     end
     
     
 end
-xlim([1,24])
+xlim([1,highest_kart_number])
 grid on
 xlabel('Kart Rank','FontSize',12,'FontWeight','b')
 ylabel('Mean Best Time (s)','FontSize',12,'FontWeight','b')
@@ -283,7 +292,7 @@ scatter(Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)
         Full_Kart_DB((Full_Kart_DB(:,4)>=datenum(start_date))&(Full_Kart_DB(:,4)<=datenum(end_date)+1),6),...
         'filled')
     
-xlim([1,24])
+xlim([1,highest_kart_number])
 ylim([16,24])
 grid on
 xlabel('KartNumber','FontSize',14,'FontWeight','b')
@@ -329,8 +338,8 @@ if exist('plot_racerID')
         end
     end
 end
-xlim([1,24])
-ylim([17,20])
+xlim([1,highest_kart_number])
+ylim([fastlim,slowlim])
 grid on
 xlabel('KartNumber','FontSize',14,'FontWeight','b')
 ylabel('Best Lap Time','FontSize',14,'FontWeight','b')

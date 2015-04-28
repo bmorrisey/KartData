@@ -36,7 +36,7 @@ for racer = 2:num_racers+1
         laptimes=[laptimes,100*ones(1,size(lap_table,2)-length(laptimes))];
     end
     
-    if length(laptimes)<size(lap_table,2)
+    if length(laptimes)>size(lap_table,2)
         %this racer had more laps than other racers
         lap_table=[lap_table,100*ones(size(lap_table,1),1)];
     end

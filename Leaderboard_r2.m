@@ -93,7 +93,7 @@ qual_table=sortrows(qual_table);
 % Print Qual Times to CSV
 filename=strcat('qualtimes_',datestr(date,'YYmmdd'),'.csv');
 fileID = fopen(filename,'w');
-formatSpec = '%s,%5.3f,%s,%u,%5.3f\n';
+formatSpec = '%s,%u,%s,%u,%5.3f\n';
 fprintf(fileID,'%s,%s,%s,%s,%s\n','Racer Name','Racer ID','Date','Kart','QualTime');
 for row = 1:size(qual_table,1)
     %     fprintf(fileID,formatSpec,Leaders{row,2},Mean_Best(row),Best_Three(row,:));
@@ -150,7 +150,7 @@ leaderboard = sortrows(leaderboard,2);
 % Print Leaderboard to CSV
 filename=strcat('leaderboard_',datestr(date,'YYmmdd'),'.csv');
 fileID = fopen(filename,'w');
-formatSpec = '%s,%5.3f,%5.3f,%5.3f\n';
+formatSpec = '%s,%u,%5.3f,%u\n';
 fprintf(fileID,'%s,%s,%s,%s\n','Racer Name','Racer ID','QualTime','Num Races');
 for row = 1:size(leaderboard,1)
     %     fprintf(fileID,formatSpec,Leaders{row,2},Mean_Best(row),Best_Three(row,:));

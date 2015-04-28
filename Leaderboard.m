@@ -23,6 +23,7 @@ AV_Racers={...
     1150608,    'Kamil',        1;
     6390,       'Aeronaut',     1;
     1098385,    'LINZ',         1;
+    1430,       'Linz',         1;
     1186403,    'Clint W',      1;
     73742,      'Master P',     1;
     25956,      'K Dub 217',    1;
@@ -37,6 +38,10 @@ AV_Racers={...
     1186655,    'April Fuelz',  1;
     1186654,    'Jomama',       1;
     1186404,    'Toaster',      1;
+    1127814,    'Maverick',     1;
+    1075127,    'Perci',        1;
+    1190047,    '01134MRE',     1;
+    1117507,    'Dierks Bently',1;
     1448,       'Snow Racer',   1};
 
 %% 

@@ -17,6 +17,7 @@ dead_rows = 7; %Number of rows in the first table that are not actual racers
 
 out_table = getTableFromWeb_mod(url_name,1);
 num_racers = size(out_table,1)-dead_rows;
+racers = get_racers_from_race(race_ID); %The order of racers in this list is the finishing order
 
 lap_table=[];
 racer_list={};
@@ -28,6 +29,7 @@ for racer = 2:num_racers+1
     racer_list{racer-1,1}=racer_table{1,1};
     %Parse the table to get the actual laptimes
     laptimes=strsplit([racer_table{3:size(racer_table,1),2}],{' ','[',']'});
+    current_racer_place=laptimes{2};
     laptimes=laptimes(1,1:2:end-1);
     laptimes=strjoin(laptimes,' ');
     laptimes=str2num(laptimes);
